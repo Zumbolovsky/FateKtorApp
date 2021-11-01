@@ -1,4 +1,4 @@
-#FateKtorApp
+# FateKtorApp
 
 This is a base repository for my digital playground and future reference for development.
 
