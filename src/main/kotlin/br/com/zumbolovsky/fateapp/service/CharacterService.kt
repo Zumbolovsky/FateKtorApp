@@ -6,23 +6,28 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object CharacterService {
 
-    fun findAll() = Character.all()
-
-    fun persist(request: CharacterVO): Character {
-        var character: Character? = null
+    fun findAll() =
         transaction {
+            Character.all()
+                .map { CharacterVO(it.id.value, it.name, it.rarity) }
+                .toCollection(arrayListOf())
+        }
+
+    fun persist(request: CharacterVO): CharacterVO {
+        return transaction {
+            val character: Character
             try {
                 when (request.id) {
                     null -> insert(request)
                     else -> update(request)
                 }.also { character = it }
                 commit()
+                return@transaction character.toVO()
             } catch (e: Exception) {
                 rollback()
                 throw ApplicationException()
             }
         }
-        return character!!
     }
 
     private fun update(request: CharacterVO) = Character.new(request.id) {

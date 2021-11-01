@@ -13,16 +13,11 @@ object Routes {
     fun Application.createRoutes() {
         routing {
             get("/characters") {
-                val list = CharacterService.findAll()
-                    .map { CharacterVO(it.id.value, it.name, it.rarity) }
-                    .toCollection(arrayListOf())
-                call.respond(list)
+                call.respond(CharacterService.findAll())
             }
 
             post("/characters") {
-                val request = call.receive<CharacterVO>()
-                val character = CharacterService.persist(request)
-                call.respond(character.toVO())
+                call.respond(CharacterService.persist(call.receive()))
             }
         }
     }
