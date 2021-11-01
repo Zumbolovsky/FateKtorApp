@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CharacterVO(
     val id: Int? = null,
-    val name: String,
-    val rarity: Rarity
-)
+    val name: String?,
+    val rarity: Rarity?
+) {
+    constructor() : this(null, null, null)
+}

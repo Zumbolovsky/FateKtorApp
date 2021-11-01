@@ -1,6 +1,5 @@
-package br.com.zumbolovsky.fateapp
+package br.com.zumbolovsky.fateapp.domain
 
-import br.com.zumbolovsky.fateapp.domain.Rarity
 import br.com.zumbolovsky.fateapp.web.CharacterVO
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.IntEntity

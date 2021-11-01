@@ -13,7 +13,7 @@ object Routes {
     fun Application.createRoutes() {
         routing {
             get("/characters") {
-                call.respond(CharacterService.findAll())
+                call.respond(CharacterService.findAll(call.receive()))
             }
 
             post("/characters") {
