@@ -1,5 +1,6 @@
 package br.com.zumbolovsky.fateapp.web
 
+import br.com.zumbolovsky.fateapp.domain.Rarity
 import br.com.zumbolovsky.fateapp.service.CharacterService
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -13,7 +14,13 @@ object Routes {
     fun Application.createRoutes() {
         routing {
             get("/characters") {
-                call.respond(CharacterService.findAll(call.receive()))
+                val v = call.request.queryParameters
+                val vo = CharacterVO(
+                    v[CharacterVO.id]?.toInt(),
+                    v[CharacterVO.name],
+                    if (v[CharacterVO.rarity] != null) Rarity.valueOf(v[CharacterVO.rarity]!!) else null
+                )
+                call.respond(CharacterService.findAll(vo))
             }
 
             post("/characters") {
